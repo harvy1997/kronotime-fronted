@@ -1,0 +1,177 @@
+<header class=" top-0 left-0 max-w-full w-full">
+    <nav class="relative px-4 py-4 flex justify-between items-center bg-white flex-wrap">
+        <div class="flex w-full items-center lg:flex-nowrap flex-wrap">
+            <div class="md:hidden md:w-1/12 sm:w-2/12" (click)="openMenu()">
+                <button class="navbar-burger flex items-center text-blue-600 p-3">
+                    <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <title>Mobile menu</title>
+                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                    </svg>
+                </button>
+            </div>
+            <a class="flex justify-center lg:w-1/5 md:w-3/12 w-7/12" href="#">
+                <img src="https://cdn.shopify.com/s/files/1/0550/3293/8662/files/logo-b_6afe78ba-49a4-47d7-af62-2596bb75e092.svg"
+                    alt="logo" class=" h-auto md:w-8/12 w-1/2">
+            </a>
+            <div
+                class=" lg:mx-auto md:flex hidden lg:items-center lg:justify-center justify-end lg:space-x-6 lg:w-3/5 md:w-4/12 ">
+                <section class="search">
+                    <form action="" class="search-bar">
+                        <input type="search" name="search" pattern=".*\S.*" required>
+                        <button class="search-btn" type="submit">
+                            <span>Search</span>
+                        </button>
+                    </form>
+                </section>
+            </div>
+            <div class="utilities grid grid-flow-col auto-cols-auto gap-x-2 lg:w-1/5 w-1/4 ">
+                <span class="flex justify-center items-center md:gap-x-2">
+                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" role="presentation"
+                        class="lg:w-6 md:w-6 w-5">
+                        <path
+                            d="M4.155 2.5a2.62 2.62 0 0 1 1.873.784l1.973 2 1.972-2a2.629 2.629 0 0 1 3.745 0 2.719 2.719 0 0 1 0 3.816L8 12.87 2.282 7.1a2.719 2.719 0 0 1 0-3.816A2.62 2.62 0 0 1 4.155 2.5m0-1.5a4.123 4.123 0 0 0-2.938 1.228 4.218 4.218 0 0 0 0 5.928L8 15l6.783-6.844a4.219 4.219 0 0 0 0-5.928 4.129 4.129 0 0 0-5.876 0L8 3.143l-.907-.916A4.124 4.124 0 0 0 4.155 1z">
+                        </path>
+                    </svg>
+                    <p class="md:block hidden text-gray-900 h-auto">Favoritos</p>
+                </span>
+                <span class="flex justify-center items-center md:gap-x-2">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="lg:w-6 md:w-6 w-5"
+                        viewBox="0 0 37 40">
+                        <path
+                            d="M36.5 34.8L33.3 8h-5.9C26.7 3.9 23 .8 18.5.8S10.3 3.9 9.6 8H3.7L.5 34.8c-.2 1.5.4 2.4.9 3 .5.5 1.4 1.2 3.1 1.2h28c1.3 0 2.4-.4 3.1-1.3.7-.7 1-1.8.9-2.9zm-18-30c2.2 0 4.1 1.4 4.7 3.2h-9.5c.7-1.9 2.6-3.2 4.8-3.2zM4.5 35l2.8-23h2.2v3c0 1.1.9 2 2 2s2-.9 2-2v-3h10v3c0 1.1.9 2 2 2s2-.9 2-2v-3h2.2l2.8 23h-28z">
+                        </path>
+                    </svg>
+                    <p class="md:block hidden text-gray-900 h-auto">Mi cesta</p>
+                </span>
+            </div>
+        </div>
+        <section class="w-full nav-categories" (mouseleave)="unshowOption()">
+            <ul class="flex lg:mx-auto lg:items-center justify-center w-full">
+                @for (item of menu; track $index) {
+                <li (mouseover)="showInfo(item)">
+                    <h3 [ngClass]="{'md:block hidden':!item.mobile,'block':item.mobile}" class="text-md font-bold text-gray-900 hover:text-white hover:bg-gray-700 capitalize md:px-4 px-2 md:py-2 py-1">
+                        <a [href]="item.href">
+                            {{item.title}}
+                        </a>
+                    </h3>
+                </li>
+                }
+            </ul>
+            <section [ngClass]="openOption ? 'md:grid hidden md:m-4 m-2 grid-gap-4 grid-flow-col auto-cols-auto':'hidden'">
+                @for (item of option; track $index) {
+                <article class="category md:px-4 px-2">
+                    <h2 class="text-md font-bold text-gray-900 capitalize md:px-4 px-2 md:py-2 py-1">{{item.category}}</h2>
+                    <hr>
+                    <ul>
+                        @for (subcategory of item.subcategories; track $index) {
+                        <li >
+                            <a [href]="subcategory.href">
+                                <h3 class="text-sm  text-gray-900 capitalize md:px-4 px-2 md:py-2 py-1"
+                                href="#">{{subcategory.subcategory}}</h3>
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                </article>
+                }
+            </section>
+        </section>
+    </nav>
+    <div class="navbar-menu relative z-50 md:hidden" [ngClass]="{'hidden':!menuIsOpen,'block':menuIsOpen}">
+		<div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+		<nav class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
+			<div class="flex items-center mb-8">
+				<a class="mr-auto text-3xl font-bold leading-none" href="#">
+					<img src="https://cdn.shopify.com/s/files/1/0550/3293/8662/files/logo-b_6afe78ba-49a4-47d7-af62-2596bb75e092.svg"
+                    alt="logo" class=" h-auto md:w-8/12 w-1/2">
+				</a>
+				<button class="navbar-close" (click)="openMenu()">
+					<svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				</button>
+			</div>
+			<div>
+				<ul>
+                    @for (item of menu; track idx;let idx=$index) {
+                        <li (click)="showInfoMobile(item,idx)" class="mb-1" [ngClass]="{'bg-gray-900':(idx==idMobile)}">
+                            <h3 [ngClass]="{'block':!item.mobile,'hidden':item.mobile,'!text-white':(idx==idMobile)}" class="text-md font-bold text-gray-900 hover:text-white hover:bg-gray-700 capitalize md:px-4 px-2 md:py-2 py-1">
+                                <a [href]="item.href">
+                                    {{item.title}}
+                                </a>
+                            </h3>
+                            @if(idx==idMobile){
+                                <section class="grid md:m-4 m-2 grid-gap-4 grid-flow-row auto-rows-min">
+                                    @for (item of option; track $index) {
+                                    <article class="category md:px-4 px-2">
+                                        <h2 class="text-md font-bold text-white capitalize md:px-4 px-2 md:py-2 py-1">{{item.category}}</h2>
+                                        <hr>
+                                        <ul class="mr-2">
+                                            @for (subcategory of item.subcategories; track $index) {
+                                            <li >
+                                                <a [href]="subcategory.href">
+                                                    <h3 class="text-sm  text-white capitalize md:px-4 px-2 md:py-2 py-1"
+                                                    href="#">{{subcategory.subcategory}}</h3>
+                                                </a>
+                                            </li>
+                                            }
+                                        </ul>
+                                    </article>
+                                    }
+                                </section>
+                            }
+                        </li>
+                    }
+				</ul>
+			</div>
+			<div class="mt-auto">
+				
+				<p class="my-4 text-xs text-center text-gray-400">
+					<span>Copyright © 2023</span>
+				</p>
+			</div>
+		</nav>
+	</div>
+</header>
+<script>
+    // Burger menus
+    document.addEventListener('DOMContentLoaded', function () {
+        // open
+        const burger = document.querySelectorAll('.navbar-burger');
+        const menu = document.querySelectorAll('.navbar-menu');
+
+        if (burger.length && menu.length) {
+            for (var i = 0; i < burger.length; i++) {
+                burger[i].addEventListener('click', function () {
+                    for (var j = 0; j < menu.length; j++) {
+                        menu[j].classList.toggle('hidden');
+                    }
+                });
+            }
+        }
+
+        // close
+        const close = document.querySelectorAll('.navbar-close');
+        const backdrop = document.querySelectorAll('.navbar-backdrop');
+
+        if (close.length) {
+            for (var i = 0; i < close.length; i++) {
+                close[i].addEventListener('click', function () {
+                    for (var j = 0; j < menu.length; j++) {
+                        menu[j].classList.toggle('hidden');
+                    }
+                });
+            }
+        }
+
+        if (backdrop.length) {
+            for (var i = 0; i < backdrop.length; i++) {
+                backdrop[i].addEventListener('click', function () {
+                    for (var j = 0; j < menu.length; j++) {
+                        menu[j].classList.toggle('hidden');
+                    }
+                });
+            }
+        }
+    });
+</script>

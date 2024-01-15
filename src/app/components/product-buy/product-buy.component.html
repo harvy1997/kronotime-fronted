@@ -1,0 +1,19 @@
+<article class="md:p-2 p-1 flex h-[20vh] w-full border rounded">
+    <img src="https://malvaonline.com/cdn/shop/products/KARASKIRTBLAC_WEBP_720x.jpg" alt="producto" class="w-auto h-full">
+    <div class="flex w-8/12 md:mx-3 mx-2 flex-row flex-wrap">
+        <h2 class="text-md font-bold text-gray-900 w-full text-center">{{producto.nombre}}</h2>
+        <section class="flex price items-center gap-x-2 justify-center w-full">
+            <small><del>COP: {{producto.compare_precio}}</del></small>
+            <h4  class="font-bold">COP {{producto.precio}}</h4>
+        </section>
+        <section class="flex justify-center w-full">
+            <p class="text-center font-bold text-gray-600">Total: COP {{producto.precio*producto.cantidad}}</p>
+        </section>
+    </div>
+    <div class="flex w-2/12 md:mx-3 mx-2 items-center">
+        <button (click)="sub()" class="w-1/4 text-2xl font-bold">-</button>
+        <p class="w-2/4 text-center">{{producto.cantidad}}</p>
+        <button (click)="sum()" class="w-1/4 text-2xl font-bold">+</button>
+    </div>
+
+</article>
